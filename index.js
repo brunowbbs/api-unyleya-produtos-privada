@@ -27,16 +27,28 @@ mongoose.connect(
 server.get("/", (req, res) => {
   return res.json({
     message: "Seja bem vindo à API - Wesley Bruno!!!😉",
-    product_list: {
-      url: "api-unyleya-produtos-privado.vercel.app/produtos",
+
+    auth: {
+      url: "https://api-infnet-produtos-privado.vercel.app/auth",
+      method: "POST",
+      body: {
+        email: "string",
+        password: "string",
+      },
+    },
+
+    listagem_produtos: {
+      url: "https://api-infnet-produtos-privado.vercel.app/produtos",
       method: "GET",
     },
-    product_details: {
-      url: "api-unyleya-produtos-privado.vercel.app/produtos/[id]",
+
+    detalhe_produto: {
+      url: "https://api-infnet-produtos-privado.vercel.app/produtos/[id]",
       method: "GET",
     },
-    create_product: {
-      url: "api-unyleya-produtos-privado.vercel.app/produtos",
+
+    criacao_produto: {
+      url: "https://api-infnet-produtos-privado.vercel.app/produtos",
       method: "POST",
       body: {
         nome: "Nome do produto",
@@ -46,8 +58,9 @@ server.get("/", (req, res) => {
         descricao: "Descrição do produto",
       },
     },
-    edit_product: {
-      url: "api-unyleya-produtos-privado.vercel.app/produtos/[id]",
+
+    edicao_produto: {
+      url: "https://api-infnet-produtos-privado.vercel.app/produtos/[id]",
       method: "PUT",
       body: {
         nome: "Nome do produto",
@@ -57,9 +70,15 @@ server.get("/", (req, res) => {
         descricao: "Descrição do produto",
       },
     },
-    remove_product: {
-      url: "api-unyleya-produtos-privado.vercel.app/produtos/[id]",
+
+    remocao_produto: {
+      url: "https://api-infnet-produtos-privado.vercel.app/produtos/[id]",
       method: "DELETE",
+    },
+
+    listagem_fornecedores: {
+      url: "https://api-infnet-produtos-privado.vercel.app/fornecedores",
+      method: "GET",
     },
   });
 });
