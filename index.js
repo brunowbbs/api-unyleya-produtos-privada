@@ -32,8 +32,8 @@ server.get("/", (req, res) => {
       url: "https://api-infnet-produtos-privado.vercel.app/auth",
       method: "POST",
       body: {
-        email: "string",
-        password: "string",
+        email: "admin@admin.com",
+        password: "123456",
       },
     },
 
