@@ -181,7 +181,7 @@ server.post("/auth", async (req, res) => {
 
   if (email === "admin@admin.com" && password === "123456") {
     return res.status(200).json({
-      name: "Admin Unyleya",
+      name: "Admin Infnet",
       email,
       token,
     });
