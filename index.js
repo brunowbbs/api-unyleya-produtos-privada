@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const PORT = process.env.PORT || 3001;
 
 const ProductSchema = require("./schemas/ProductSchema");
+const FornecedorSchema = require("./schemas/FornecedorSchema");
 const { authorization } = require("./services/authorization");
 
 const TOKEN = "eccd804f-9eea-43c9-8950-6e12073eccf0";
@@ -79,6 +80,27 @@ server.get("/", (req, res) => {
     listagem_fornecedores: {
       url: "https://api-infnet-produtos-privado.vercel.app/fornecedores",
       method: "GET",
+    },
+
+    criacao_fornecedor: {
+      url: "https://api-infnet-produtos-privado.vercel.app/fornecedores",
+      method: "POST",
+      body: {
+        nome: "Nome do fornecedor",
+      },
+    },
+
+    edicao_fornecedor: {
+      url: "https://api-infnet-produtos-privado.vercel.app/fornecedores/[id]",
+      method: "PUT",
+      body: {
+        nome: "Nome do fornecedor",
+      },
+    },
+
+    remocao_fornecedor: {
+      url: "https://api-infnet-produtos-privado.vercel.app/fornecedores/[id]",
+      method: "DELETE",
     },
   });
 });
@@ -169,8 +191,26 @@ server.post("/auth", async (req, res) => {
 });
 
 //Fornecedores
-server.get("/fornecedores", (req, res) => {
+server.get("/fornecedores", authorization, async (req, res) => {
+  const fornecedores = await FornecedorSchema.find();
   return res.json(fornecedores);
+});
+
+server.post("/fornecedores", authorization, async (req, res) => {
+  const result = await FornecedorSchema.create(req.body);
+  return res.status(201).json(result);
+});
+
+server.put("/fornecedores/:id", authorization, async (req, res) => {
+  const { id } = req.params;
+  const todo = await FornecedorSchema.findOneAndUpdate({ _id: id }, req.body);
+  return res.json(todo);
+});
+
+server.delete("/fornecedores/:id", authorization, async (req, res) => {
+  const { id } = req.params;
+  await FornecedorSchema.deleteOne({ _id: id });
+  return res.json({ message: "Successfully deleted" });
 });
 
 //Product
